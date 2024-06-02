@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>King's</title>
+</head>
+<body>
+    
+
+    <h1 align="center">Basic Orbital Calculations</h1>
+    
+    <h3>Introduction</h3>
+    <p>This Section of the site is dedicated to performing basic orbital mechanics calculations.
+        Bellow, you may enter data and receive useful information about different types of orbits,
+        rendezvous calculations, speeds, periods, delta V reqirments, mission planning information, etc. Know that all of these 
+        equations are meant for coplaner menuvers and focus on circular orbits, though some can provide data for eliptical orbits.</p>
+
+        <div id="basic-orbit">
+            <h3>Basic Orbital Information</h3>
+            <div id="planet-info">
+            
+                <p style="margin-top: 30px;">Around which planet are you operating?</p>
+                <form id="planet">
+                    <input type="radio" name="Planet" id="Earth"  value="Earth">
+                    <label for="Earth"> Earth</label><br>
+                    <input type="radio" name="Planet" id="Kerbin"  value="Kerbin">
+                    <label for="Kerbin">Kerbin</label>
+                </form>
+                
+            </div>
+    
+
+            <div id="orbit-info">
+                <p>Now, please enter the various bits of information you have:</p>
+
+                <form id="variables">
+                    <label for="Apo">Apoapsis in meters:</label><br>
+                    <input class="input-box" type="text" id="Apo" name="alt"><br>
+                    <label for="Per">Periapsis in meters:</label><br>
+                    <input class="input-box" type="text" id="Per" name="alt"><br>
+                </form>
+            </div>
+            
+            <button onclick="calculate()"> Calculate</button>
+
+            <div id="orbit-info-output"><h4 id="error" style= "color:red"> </h4></div>
+
+        </div> 
+
+        <div id="hohmann-transfer">
+            <h3>Hohmann Transfer</h3>
+            <p> Please indicate the desired Apoapsis and Periapsis to which you are looking to transfer:</p>
+            <form id="variables">
+                <label for="Apo2">Apoapsis in meters:</label><br>
+                <input class="input-box" type="text" id="Apo2" name="alt2"><br>
+                <label for="Per2">Periapsis in meters:</label><br>
+                <input class="input-box" type="text" id="Per2" name="alt2"><br>
+            </form>
+            <button onclick="calculateHohmann()"> Calculate Transfer</button>
+
+            <div id="hohmann-transfer-output"></div>
+            
+            <div id="new-orbit-output"></div>
+        </div>
+
+        <script src="index.js"></script>
+</body>
+</html>
