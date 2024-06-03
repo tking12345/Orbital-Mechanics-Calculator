@@ -127,7 +127,7 @@ function calculateHohmann(){
         "V@AP: " + VAP2_2.toLocaleString() + " m/s</br>" +
         "V@PE: " + VPE2.toLocaleString() +" m/s</br>"+
         "&Delta;V: " + deltaV2.toLocaleString() + " m/s</br>" +
-        "Total &Delta;V: " + (deltaV+deltaV2) + " m/s</br>" +
+        "Total &Delta;V: " + (deltaV+deltaV2).toFixed(3) + " m/s</br>" +
         "Orbital Period: " + Period3.toFixed(3) + " Minutes</br>";
 
         document.getElementById("new-orbit-output").innerHTML = results3
