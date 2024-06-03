@@ -191,7 +191,10 @@ function calculateCoplaner(){
         results = "Lead angle: " + leaddeg.toFixed(3) + "&deg;</br>"+
         "Final angle: " + finaldeg.toFixed(3) + "&deg;</br>"+
         "Time of flight: " + (TOF/60).toFixed(2) + " minutes</br>" +
-        "Wait time: " + (waitTime/60).toFixed(2) + " minutes</br>";
+        "Wait time: " + (waitTime/60/60).toFixed(2) + " hours</br>";+
+        "Wait time: " + (waitTime/60).toFixed(2) + " minutes</br>" +
+        "Wait time: " + (waitTime).toFixed(2) + " seconds</br>";
+
 
         document.getElementById("coplaner-output").innerHTML = results;
     }
