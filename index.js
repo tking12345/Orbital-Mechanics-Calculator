@@ -127,5 +127,24 @@ function calculateHohmann(){
 
     document.getElementById("new-orbit-output").innerHTML = results3
 }
+
+function calculateCoplaner(){
+
+    WhatPlanet();
+    Periapsis1 = Number(document.getElementById("Per").value);
+    Apoapsis1 = Number(document.getElementById("Apo").value);
+    Apoapsis2 = Number(document.getElementById("Apo2").value);
+    Periapsis2 = Number(document.getElementById("Per2").value);
+    a1 = (((Apoapsis1 + Periapsis1) + (2 * MR))/2);
+    a3 = (((Apoapsis2 + Periapsis2) + (2 * MR)) / 2);
+    w = Math.sqrt((MU/Math.pow(a3, 3)));
+    at = (a1+a3)/2;
+    TOF = Math.PI * Math.sqrt(Math.pow(at, 3)/MU);
+    lead = (180 - ((180/Math.PI)*(w * TOF)));
+
+    results = "Phase angle: " + lead + "&deg;</br>";
+
+    document.getElementById("coplaner-output").innerHTML = results;
+}
     
     
