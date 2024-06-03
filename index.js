@@ -142,7 +142,7 @@ function calculateCoplaner(){
     TOF = Math.PI * Math.sqrt(Math.pow(at, 3)/MU);
     lead = (180 - ((180/Math.PI)*(w * TOF)));
 
-    results = "Phase angle: " + lead + "&deg;</br>";
+    results = "Phase angle: " + lead.toFixed(3) + "&deg;</br>";
 
     document.getElementById("coplaner-output").innerHTML = results;
 }

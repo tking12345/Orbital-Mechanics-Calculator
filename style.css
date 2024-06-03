@@ -2,6 +2,7 @@ body{
     background-color: black;
     color: white;
     line-height: 20px;
+    margin: 50px;
 }
 
 #basic-orbit{
@@ -24,4 +25,8 @@ body{
 }
 #coplaner-output{
     margin-top: 15px;
+}
+
+#coplaner-ren{
+    margin-top: 50px;
 }
