@@ -138,19 +138,60 @@ function calculateCoplaner(){
 
     WhatPlanet();
     if (Planet != 0){
+        //setting variables for equations
         document.getElementById("error").innerHTML = null;
         Periapsis1 = Number(document.getElementById("Per").value);
         Apoapsis1 = Number(document.getElementById("Apo").value);
         Apoapsis2 = Number(document.getElementById("Apo2").value);
         Periapsis2 = Number(document.getElementById("Per2").value);
+        phi1 = Number(document.getElementById("cur-angle").value);
+    
+        //semi major axies
         a1 = (((Apoapsis1 + Periapsis1) + (2 * MR))/2);
         a3 = (((Apoapsis2 + Periapsis2) + (2 * MR)) / 2);
-        w = Math.sqrt((MU/Math.pow(a3, 3)));
-        at = (a1+a3)/2;
-        TOF = Math.PI * Math.sqrt(Math.pow(at, 3)/MU);
-        lead = (180 - ((180/Math.PI)*(w * TOF)));
 
-        results = "Phase angle: " + lead.toFixed(3) + "&deg;</br>";
+        //angular velocity of target
+        wt = Math.sqrt((MU/Math.pow(a3, 3)));
+        console.log(wt + "</br>");
+
+        //angular velocity of interceptor
+        wi = Math.sqrt(MU/Math.pow(a1, 3));
+        console.log(wi + "</br>");
+
+        //semi major axis of tranfer orbit
+        at = (a1+a3)/2;
+
+        //time of flight to the target
+        TOF = Math.PI * Math.sqrt(Math.pow(at, 3)/MU);
+
+        //lead angle between target and interceptor turned from rad to degrees
+        lead = (wt * TOF);
+        leaddeg = (180/Math.PI) * lead;
+
+        final = Math.PI - lead;
+        console.log("final" + final + "</br>");
+
+        finaldeg = (180/Math.PI) * final;
+
+        //phi1 from deg to rad
+        phi1 = (Math.PI / 180) * phi1;
+        console.log("phi1" + phi1 + "</br>");
+        //time between current location and burn 1
+
+        
+        waitTime = (final-phi1)/(wt-wi);
+        console.log(waitTime );
+
+        if(waitTime < 0){
+            waitTime =  ((2 * Math.PI) + (final-phi1))/(wt-wi);
+        }
+     
+
+
+        results = "Lead angle: " + leaddeg.toFixed(3) + "&deg;</br>"+
+        "Final angle: " + finaldeg.toFixed(3) + "&deg;</br>"+
+        "Time of flight: " + (TOF/60).toFixed(2) + " minutes</br>" +
+        "Wait time: " + (waitTime/60).toFixed(2) + " minutes</br>";
 
         document.getElementById("coplaner-output").innerHTML = results;
     }
