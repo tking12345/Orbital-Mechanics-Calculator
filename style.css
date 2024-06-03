@@ -39,6 +39,7 @@ body{
     margin-top: 50px;
     justify-content: space-around;
     align-items: flex-start;
+    row-gap: 50px;
     
 }
 
