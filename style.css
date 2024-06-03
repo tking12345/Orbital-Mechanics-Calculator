@@ -2,31 +2,56 @@ body{
     background-color: black;
     color: white;
     line-height: 20px;
-    margin: 50px;
+    
 }
 
-#basic-orbit{
+
+.buttons{
+    border-radius: 20px;
+    display: block;
+}
+
+.input{
+    border-radius: 50px;
+    margin-bottom: 15px;
+}
+
+.output{
+    background-color: rgb(97, 97, 97);
+    border-color: black;
+    border-radius: 10px;
+    /* border-style: solid;
+    border-width: 3px;  */
+    display: inline-flex;
+    flex-direction: row;
+    
+
+    margin-top: 15px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    line-height: 30px;
+}
+
+.flex-container{
+    width: 100%;
+    display: inline-flex;
+    flex-flow: row wrap;
     margin-top: 50px;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 50px;
 }
 
-#orbit-info-output{
-    margin-top: 15px;
+#basic-orbit,
+#hohmann-transfer,
+#rendezvous{
+    
+    border-radius: 10px;
+    background-color: grey;
+    
 }
 
-#hohmann-transfer{
-    margin-top: 50px;
-}
-#hohmann-transfer-output{
-    margin-top: 15px;
+.inside{
+    margin-left: 10px;
 }
 
-#new-orbit-output{
-    margin-top: 15px;
-}
-#coplaner-output{
-    margin-top: 15px;
-}
-
-#coplaner-ren{
-    margin-top: 50px;
-}
