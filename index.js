@@ -2,6 +2,8 @@ const GMe = 3.986004418e14;
 const GMk = 3.5316e12;
 const MeanRe = 6.371e6;
 const MeanRk = 600000;
+amink = 665000;
+amine = 6931000
 
 
 MU = 0;
@@ -25,11 +27,14 @@ function WhatPlanet(){
     if(Planet == "Earth"){
         MU = GMe;
         MR = MeanRe;
+        MO = amine;
     }
     
     if(Planet == "Kerbin"){
         MU = GMk;
         MR = MeanRk;
+        MO = amink;
+        
     }   
 }
 
@@ -205,6 +210,7 @@ function calculateCoorbital(){
     if (Planet != 0){
         //setting variables for equations
         document.getElementById("error").innerHTML = null;
+        ap = 0;
         // torbits = Number(document.getElementById("orbits-target").value);
         // iorbits = Number(document.getElementById("orbits-interceptor").value);
 
@@ -248,32 +254,41 @@ function calculateCoorbital(){
 
 
 
-        if((phi1 < 0) && (phi1 > 180)){
+        if((phi1 < 0) || (phi1 == 180)){
              //phi target in rad
-            phiT = (2 * math.PI) - ((Math.PI/180)* phi1);
+            phiT = (2 * Math.PI) + ((Math.PI/180)* Math.abs(phi1));
+            console.log("phiT " + phiT);
             type = "Apoapsis";
         }
 
-        if((phi1 > 0) && (phi1 <= 180)){
+        if((phi1 > 0) && (phi1 < 180)){
             //phi target in rad
-           phiT = (2 * Math.PI) + ((Math.PI/180)* phi1);
+           phiT = (2 * Math.PI) - ((Math.PI/180)* phi1);
            console.log("phiT " + phiT);
 
            type = "Periapsis";
        }
         
+       console.log("type " + type);
 
-        //angular velocity of target
-        wt = Math.sqrt((MU/Math.pow(a1, 3)));
-        console.log("wt " + wt);
+       while(ap < MO){
+            //angular velocity of target
+            wt = Math.sqrt((MU/Math.pow(a1, 3)));
+            console.log("wt " + wt);
 
-        //time of flight for the target
-        TOFt = phiT/wt;
-        console.log("TOFt " + TOFt);
+            //time of flight for the target
+            TOFt = phiT/wt;
+            console.log("TOFt " + TOFt);
+            
+            //using the TOF of target, we can derive the a of the phasing orbit
+            ap = Math.cbrt((Math.pow((TOFt / (2 * Math.PI)), 2) * MU));
+            console.log("ap " + ap);
 
-       //using the TOF of target, we can derive the a of the phasing orbit
-        ap = Math.cbrt((Math.pow((TOFt / (2 * Math.PI)), 2) * MU));
-        console.log("ap " + ap);
+            phiT = (2 * Math.PI) - phiT ;
+        }
+       
+
+    
         //Mechanical energy of the phasing orbit
         Ep = -MU / (2 * ap);
         console.log("Ep " + Ep);
