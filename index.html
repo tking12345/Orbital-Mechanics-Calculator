@@ -53,9 +53,7 @@
                     <button class="buttons" onclick="calculate()"> Calculate</button>
 
                     <div class="output" id="orbit-info-output"></div>
-
                 </div>
-                
             </div> 
 
             <div id="hohmann-transfer">
@@ -69,31 +67,39 @@
                         <input class="input" type="text" id="Per2" name="alt2"><br>
                     </form>
                     <button class="buttons" onclick="calculateHohmann()"> Calculate Transfer</button>
-
-                        <div class="output" id="hohmann-transfer-output"></div>
-                    
-                        <div class="output" id="new-orbit-output"></div>
-                   
+                    <div class="output" id="hohmann-transfer-output"></div>
+                    <div class="output" id="new-orbit-output"></div>
                 </div>
             </div>
             
-            <div id="rendezvous">
-
+            <div id="co-planer">
                 <div class="inside">
                     <div id="coplaner-ren">
                         <h3>Coplaner Rendezvous</h3>
-                        <label for="CurAngle">Current phase angle in degrees:</label><br>
+                        <label for="cur-angle">Current phase angle in degrees:</label><br>
                         <input class="input" type="text" id="cur-angle" name="phi"><br>
-            
                         <button class="buttons" onclick="calculateCoplaner()">Calculate Rendezvous</button>
                         <div class="output" id="coplaner-output"></div>
-            
                     </div>
                 </div>
             </div>
-       </div>
-        
-        
+
+            <div>
+                <div id="co-orbital">
+                    <div class="inside">
+                        <h3>Coorbital Rendezvous</h3>
+                        <label for="CurAngle">Current phase angle in degrees:</label><br>
+                        <input class="input" type="text" id="co-angle" name="phiis"><br>                    
+                        <label for="orbits-target">Number of target orbits:</label><br>
+                        <input class="input" type="text" id="orbits-target" name="t-orbits"><br>   
+                        <label for="orbits-interceptor">Number of interceptor orbits:</label><br>
+                        <input class="input" type="text" id="orbits-interceptor" name="i-orbits"><br>
+                        <button class="buttons" onclick="calculateCoorbital()">Calculate Rendezvous</button>
+                        <div class="output" id="coorbital-output"></div>
+                    </div>
+                </div>
+           </div>
+        </div>
         <script src="index.js"></script>
 </body>
 </html>

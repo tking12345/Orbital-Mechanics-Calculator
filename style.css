@@ -45,10 +45,12 @@ body{
 
 #basic-orbit,
 #hohmann-transfer,
-#rendezvous{
+#co-planer,
+#co-orbital{
     
     border-radius: 10px;
     background-color: grey;
+    padding: 10px;
     
 }
 

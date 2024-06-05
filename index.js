@@ -152,11 +152,10 @@ function calculateCoplaner(){
 
         //angular velocity of target
         wt = Math.sqrt((MU/Math.pow(a3, 3)));
-        console.log(wt + "</br>");
-
+       
         //angular velocity of interceptor
         wi = Math.sqrt(MU/Math.pow(a1, 3));
-        console.log(wi + "</br>");
+        
 
         //semi major axis of tranfer orbit
         at = (a1+a3)/2;
@@ -169,18 +168,18 @@ function calculateCoplaner(){
         leaddeg = (180/Math.PI) * lead;
 
         final = Math.PI - lead;
-        console.log("final" + final + "</br>");
+        
 
         finaldeg = (180/Math.PI) * final;
 
         //phi1 from deg to rad
         phi1 = (Math.PI / 180) * phi1;
-        console.log("phi1" + phi1 + "</br>");
+        
         //time between current location and burn 1
 
         
         waitTime = (final-phi1)/(wt-wi);
-        console.log(waitTime );
+        
 
         if(waitTime < 0){
             waitTime =  ((2 * Math.PI) + (final-phi1))/(wt-wi);
@@ -197,6 +196,114 @@ function calculateCoplaner(){
 
 
         document.getElementById("coplaner-output").innerHTML = results;
+    }
+}
+
+function calculateCoorbital(){
+
+    WhatPlanet();
+    if (Planet != 0){
+        //setting variables for equations
+        document.getElementById("error").innerHTML = null;
+        // torbits = Number(document.getElementById("orbits-target").value);
+        // iorbits = Number(document.getElementById("orbits-interceptor").value);
+
+
+        Periapsis1 = Number(document.getElementById("Per").value);
+        Apoapsis1 = Number(document.getElementById("Apo").value);
+        
+        //Phi initial in deg
+        phi1 =  Number(document.getElementById("co-angle").value);
+        console.log("Phi1 " + phi1);
+
+        a1 = (((Apoapsis1 + Periapsis1) + (2 * MR))/2);
+        console.log("a1 " + a1);
+
+        // //time the target will be orbiting
+        // target_orbit_time = ((torbits * (Math.PI * 2)) + phi1)/Math.sqrt(MU/a1);
+        // console.log("Target orbit time " + target_orbit_time);
+
+        // //semi major axis of the phasing orbit
+        // ap = (((MU  *(target_orbit_time/((Math.PI * 2)*iorbits))**2))**(1/3));
+        // console.log("ap " + ap);
+
+        // //velocity at the initial orbit
+        // v1 = Math.sqrt(MU * ((2/Periapsis1) - (1/Apoapsis1)));
+        // console.log("v1 " + v1);
+
+        // //velocity at the phasing orbit
+        // vp = Math.sqrt(MU * ((2/Periapsis1) - (1/ap)));
+        // console.log("vp " + vp);
+
+        // deltaV = v1 - vp;
+        // console.log("deltaV " + deltaV);
+
+        // results = "Time the target will be orbiting: " + target_orbit_time.toFixed(3) + " seconds</br>"+
+        // "Semi Major Axis of the phasing orbit: " + ap.toFixed(3) + " m</br>"+
+        // "Velocity at the initial orbit: " + v1.toFixed(3) + " m/s</br>"+
+        // "Velocity at the phasing orbit: " + vp.toFixed(3) + " m/s</br>"+
+        // "&Delta;V: " + deltaV.toFixed(3) + " m/s</br>";
+
+
+
+
+
+        if((phi1 < 0) && (phi1 > 180)){
+             //phi target in rad
+            phiT = (2 * math.PI) - ((Math.PI/180)* phi1);
+            type = "Apoapsis";
+        }
+
+        if((phi1 > 0) && (phi1 <= 180)){
+            //phi target in rad
+           phiT = (2 * Math.PI) + ((Math.PI/180)* phi1);
+           console.log("phiT " + phiT);
+
+           type = "Periapsis";
+       }
+        
+
+        //angular velocity of target
+        wt = Math.sqrt((MU/Math.pow(a1, 3)));
+        console.log("wt " + wt);
+
+        //time of flight for the target
+        TOFt = phiT/wt;
+        console.log("TOFt " + TOFt);
+
+       //using the TOF of target, we can derive the a of the phasing orbit
+        ap = Math.cbrt((Math.pow((TOFt / (2 * Math.PI)), 2) * MU));
+        console.log("ap " + ap);
+        //Mechanical energy of the phasing orbit
+        Ep = -MU / (2 * ap);
+        console.log("Ep " + Ep);
+
+        // Velocity of the phasing orbit at periapsis 
+        Vp = Math.sqrt(2 * (Ep + (MU / a1)));
+        console.log("Vp " + Vp);
+
+        //initial orbutal velocity and the deltaV (burns are the same so multiply 1 by 2)
+        v1 = Math.sqrt(MU/a1);
+        console.log("v1 " + v1);
+
+        deltaV = Math.abs(v1 - Vp);
+        deltaVTotal = deltaV * 2;
+
+        
+        
+
+
+        results = "Angle to travel: " + (phiT * (180/Math.PI)) + " deg</br>" +
+        "V@" + type + ": " + Vp.toLocaleString() + " m/s</br>" +
+        "Semi Major Axis of phasing orbit: " + ap.toLocaleString() + " m</br>" +
+        "&Delta;V: " + deltaV.toLocaleString() + " m/s</br>" +
+        "Total &Delta;V: " + deltaVTotal.toLocaleString() + " m/s</br>" +
+        "Time of flight: " + (TOFt/60/60).toLocaleString() + " hours</br>" +
+        "Time of flight: " + (TOFt/60).toLocaleString() + " minutes</br>" +
+        "Time of flight: " + (TOFt).toLocaleString() + " seconds</br>" ;
+
+
+        document.getElementById("coorbital-output").innerHTML = results;
     }
 }
     
