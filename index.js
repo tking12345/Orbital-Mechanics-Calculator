@@ -1,4 +1,4 @@
-const GMe = 3.986004418e14;
+const GMe = 3.986004418e14; 
 const GMk = 3.5316e12;
 const MeanRe = 6.371e6;
 const MeanRk = 600000;
