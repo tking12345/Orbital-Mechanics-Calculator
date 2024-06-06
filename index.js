@@ -206,11 +206,13 @@ function calculateCoplaner(){
 
 function Submit(){
     if(document.getElementById('yes').checked) {   
+        document.getElementById("1-orbit").innerHTML = null;
         document.getElementById("1-orbit").innerHTML = "<label for='CurAngle'>Current phase angle in degrees:</label><br> <input class='input' type='text' id='co-angle' name='phiis'><br> <button class='buttons' onclick='calculateCoorbital1()'>Calculate Rendezvous</button>";
         
      }  
     
      else if(document.getElementById('no').checked) {   
+        document.getElementById("1-orbit").innerHTML = null;
         document.getElementById("n-orbit").innerHTML = " <label for='CurAngle'>Current phase angle in degrees:</label><br> <input class='input' type='text' id='co-angle' name='phiis'><br> <div id='num-orbits'></div><label for='orbits-target'>Number of target orbits:</label><br><input class='input' type='text' id='orbits-target' name='t-orbits'><br>   <label for='orbits-interceptor'>Number of interceptor orbits:</label><br> <input class='input' type='text' id='orbits-interceptor' name='i-orbits'><br> <button class='buttons' onclick='calculateCoorbitaln()'>Calculate Rendezvous</button>";
        
 
@@ -219,7 +221,7 @@ function Submit(){
     
      else { 
         Planet = 0;  
-        document.getElementById("error").innerHTML = "<h4 id='error-uncheck' style= 'color:red'>Must choose one option!</h4>";   
+        document.getElementById("error-coorbital").innerHTML = "<h4 id='error-uncheck' style= 'color:red'>Must choose one option!</h4>";   
      }   
 }
 function calculateCoorbital1(){
