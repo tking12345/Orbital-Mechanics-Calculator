@@ -88,13 +88,19 @@
                 <div id="co-orbital">
                     <div class="inside">
                         <h3>Coorbital Rendezvous</h3>
-                        <label for="CurAngle">Current phase angle in degrees:</label><br>
-                        <input class="input" type="text" id="co-angle" name="phiis"><br>                    
-                        <label for="orbits-target">Number of target orbits:</label><br>
-                        <input class="input" type="text" id="orbits-target" name="t-orbits"><br>   
-                        <label for="orbits-interceptor">Number of interceptor orbits:</label><br>
-                        <input class="input" type="text" id="orbits-interceptor" name="i-orbits"><br>
-                        <button class="buttons" onclick="calculateCoorbital()">Calculate Rendezvous</button>
+                        <p style="margin-top: 30px;">Do you want to reach your target in 1 orbit?</p>
+                        <form id="planet">
+                            <input type="radio" name="transfer-type" id="yes"  value="yes">
+                            <label for="transfer-type"> Yes</label><br>
+                            <input type="radio" name="transfer-type" id="no"  value="no">
+                            <label for="No">No</label>
+                        </form>
+                        <div id="error-coorbital"></div>
+
+                        
+                        <button class="buttons" onclick="Submit()">Submit</button>
+                        <div id="1-orbit"></div>
+                        <div id="n-orbit"> </div>
                         <div class="output" id="coorbital-output"></div>
                     </div>
                 </div>

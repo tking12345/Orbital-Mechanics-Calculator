@@ -204,94 +204,90 @@ function calculateCoplaner(){
     }
 }
 
-function calculateCoorbital(){
+function Submit(){
+    if(document.getElementById('yes').checked) {   
+        document.getElementById("1-orbit").innerHTML = null;
+        document.getElementById("1-orbit").innerHTML = "<label for='CurAngle'>Current phase angle in degrees:</label><br> <input class='input' type='text' id='co-angle' name='phiis'><br> <button class='buttons' onclick='calculateCoorbital1()'>Calculate Rendezvous</button>";
+        
+     }  
+    
+     else if(document.getElementById('no').checked) {   
+        document.getElementById("1-orbit").innerHTML = null;
+        document.getElementById("n-orbit").innerHTML = " <label for='CurAngle'>Current phase angle in degrees:</label><br> <input class='input' type='text' id='co-angle' name='phiis'><br> <div id='num-orbits'></div><label for='orbits-target'>Number of target orbits:</label><br><input class='input' type='text' id='orbits-target' name='t-orbits'><br>   <label for='orbits-interceptor'>Number of interceptor orbits:</label><br> <input class='input' type='text' id='orbits-interceptor' name='i-orbits'><br> <button class='buttons' onclick='calculateCoorbitaln()'>Calculate Rendezvous</button>";
+       
+
+        
+     }   
+    
+     else { 
+        Planet = 0;  
+        document.getElementById("error-coorbital").innerHTML = "<h4 id='error-uncheck' style= 'color:red'>Must choose one option!</h4>";   
+     }   
+}
+function calculateCoorbital1(){
 
     WhatPlanet();
     if (Planet != 0){
         //setting variables for equations
         document.getElementById("error").innerHTML = null;
+
         ap = 0;
-        // torbits = Number(document.getElementById("orbits-target").value);
-        // iorbits = Number(document.getElementById("orbits-interceptor").value);
-
-
         Periapsis1 = Number(document.getElementById("Per").value);
         Apoapsis1 = Number(document.getElementById("Apo").value);
         
-        //Phi initial in deg
+        //Phi initial in deg **Changed to rad**
         phi1 =  Number(document.getElementById("co-angle").value);
         console.log("Phi1 " + phi1);
-
+        
+        //semi major axis of the initial orbit
         a1 = (((Apoapsis1 + Periapsis1) + (2 * MR))/2);
         console.log("a1 " + a1);
-
-        // //time the target will be orbiting
-        // target_orbit_time = ((torbits * (Math.PI * 2)) + phi1)/Math.sqrt(MU/a1);
-        // console.log("Target orbit time " + target_orbit_time);
-
-        // //semi major axis of the phasing orbit
-        // ap = (((MU  *(target_orbit_time/((Math.PI * 2)*iorbits))**2))**(1/3));
-        // console.log("ap " + ap);
-
-        // //velocity at the initial orbit
-        // v1 = Math.sqrt(MU * ((2/Periapsis1) - (1/Apoapsis1)));
-        // console.log("v1 " + v1);
-
-        // //velocity at the phasing orbit
-        // vp = Math.sqrt(MU * ((2/Periapsis1) - (1/ap)));
-        // console.log("vp " + vp);
-
-        // deltaV = v1 - vp;
-        // console.log("deltaV " + deltaV);
-
-        // results = "Time the target will be orbiting: " + target_orbit_time.toFixed(3) + " seconds</br>"+
-        // "Semi Major Axis of the phasing orbit: " + ap.toFixed(3) + " m</br>"+
-        // "Velocity at the initial orbit: " + v1.toFixed(3) + " m/s</br>"+
-        // "Velocity at the phasing orbit: " + vp.toFixed(3) + " m/s</br>"+
-        // "&Delta;V: " + deltaV.toFixed(3) + " m/s</br>";
-
-
-
-
 
         if((phi1 < 0) || (phi1 == 180)){
              //phi target in rad
             phiT = (2 * Math.PI) + ((Math.PI/180)* Math.abs(phi1));
-            console.log("phiT " + phiT);
             type = "Apoapsis";
         }
 
         if((phi1 > 0) && (phi1 < 180)){
             //phi target in rad
-           phiT = (2 * Math.PI) - ((Math.PI/180)* phi1);
-           console.log("phiT " + phiT);
-
+           phiT = (2 * Math.PI) + ((Math.PI/180)* phi1);
            type = "Periapsis";
        }
         
-       console.log("type " + type);
+      console.log("phiT " + phiT);
+      console.log("type " + type);
 
-       while(ap < MO){
-            //angular velocity of target
-            wt = Math.sqrt((MU/Math.pow(a1, 3)));
-            console.log("wt " + wt);
+       
+        //angular velocity of target
+        wt = Math.sqrt((MU/Math.pow(a1, 3)));
+        console.log("wt " + wt);
 
+
+        //time of flight for the target
+        TOFt = phiT/wt;
+        console.log("TOFt " + TOFt);
+        
+        //using the TOF of target, we can derive the a of the phasing orbit
+        ap = Math.cbrt((Math.pow((TOFt / (2 * Math.PI)), 2) * MU));
+       
+
+        if (ap < MO){
+            phiT = phiT + (2 * Math.PI);
+            
             //time of flight for the target
             TOFt = phiT/wt;
-            console.log("TOFt " + TOFt);
+            
             
             //using the TOF of target, we can derive the a of the phasing orbit
             ap = Math.cbrt((Math.pow((TOFt / (2 * Math.PI)), 2) * MU));
-            console.log("ap " + ap);
-
-            phiT = (2 * Math.PI) - phiT ;
         }
-       
+        console.log("ap " + ap);
 
-    
         //Mechanical energy of the phasing orbit
         Ep = -MU / (2 * ap);
         console.log("Ep " + Ep);
+       
 
         // Velocity of the phasing orbit at periapsis 
         Vp = Math.sqrt(2 * (Ep + (MU / a1)));
@@ -302,11 +298,8 @@ function calculateCoorbital(){
         console.log("v1 " + v1);
 
         deltaV = Math.abs(v1 - Vp);
+        console.log("deltaV " + deltaV);
         deltaVTotal = deltaV * 2;
-
-        
-        
-
 
         results = "Angle to travel: " + (phiT * (180/Math.PI)) + " deg</br>" +
         "V@" + type + ": " + Vp.toLocaleString() + " m/s</br>" +
@@ -321,5 +314,58 @@ function calculateCoorbital(){
         document.getElementById("coorbital-output").innerHTML = results;
     }
 }
-    
+ 
+function calculateCoorbitaln(){
+
+    WhatPlanet();
+    if (Planet != 0){
+        //setting variables for equations
+        document.getElementById("error").innerHTML = null;
+        ap = 0;
+        torbits = Number(document.getElementById("orbits-target").value);
+        console.log("torbits " + torbits);
+
+        iorbits = Number(document.getElementById("orbits-interceptor").value);
+        console.log("iorbits " + iorbits);
+
+
+        Periapsis1 = Number(document.getElementById("Per").value);
+        Apoapsis1 = Number(document.getElementById("Apo").value);
+        
+        //Phi initial in deg **Changed to rad**
+        phi1 =  (Math.PI/180) * Number(document.getElementById("co-angle").value);
+        console.log("Phi1 " + phi1);
+        
+        //semi major axis of the initial orbit
+        a1 = (((Apoapsis1 + Periapsis1) + (2 * MR))/2);
+        console.log("a1 " + a1);
+
+        //time the target will be orbiting
+        target_orbit_time = ((torbits * (Math.PI * 2)) + phi1)/Math.sqrt(MU/Math.pow(a1, 3));
+        console.log("Target orbit time " + target_orbit_time);
+
+        //semi major axis of the phasing orbit
+        ap = (((MU  *(target_orbit_time/((Math.PI * 2)*iorbits))**2))**(1/3));
+        console.log("ap " + ap);
+
+        //velocity at the initial orbit
+        v1 = Math.sqrt(MU * ((2/a1) - (1/a1)));
+        console.log("v1 " + v1);
+
+        //velocity at the phasing orbit
+        vp = Math.sqrt(MU * ((2/a1) - (1/ap)));
+        console.log("vp " + vp);
+
+        deltaV = v1 - vp;
+        console.log("deltaV " + deltaV);
+
+        results = "Time the target will be orbiting: " + target_orbit_time.toFixed(3) + " seconds</br>"+
+        "Semi Major Axis of the phasing orbit: " + ap.toFixed(3) + " m</br>"+
+        "Velocity at the initial orbit: " + v1.toFixed(3) + " m/s</br>"+
+        "Velocity at the phasing orbit: " + vp.toFixed(3) + " m/s</br>"+
+        "&Delta;V: " + deltaV.toFixed(3) + " m/s</br>";
+
+        document.getElementById("coorbital-output").innerHTML = results;
+    }
+}
     
